@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    Manual Workout
+</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7ff;
+}
+
+.container {
+    width: 92%;
+    max-width: 1000px;
+    margin: 35px auto;
+}
+
+.card {
+    background: white;
+    padding: 28px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.08);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 16px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 11px;
+    margin: 7px 0 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+textarea {
+    min-height: 90px;
+}
+
+.exercise {
+    background: #f8fafc;
+    padding: 18px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media(max-width:700px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<a
+    href="{{ url_for(
+        'workout_home',
+        client_id=client.client_id
+    ) }}"
+    class="back"
+>
+    ← Back to Workout
+</a>
+
+<div class="card">
+
+<h1>
+    ✏ Manual Workout Plan
+</h1>
+
+<p>
+    Client: <strong>{{ client.full_name }}</strong>
+</p>
+
+<form method="POST">
+
+<label>
+    Plan Name
+</label>
+
+<input
+    name="plan_name"
+    placeholder="6 Week Weight Loss Plan"
+    required
+>
+
+<div class="grid">
+
+<div>
+
+<label>Goal</label>
+
+<input
+    name="goal"
+    value="{{ client.goal or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Experience</label>
+
+<select name="experience_level">
+
+<option>Beginner</option>
+<option>Intermediate</option>
+<option>Advanced</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Days Per Week</label>
+
+<input
+    type="number"
+    name="days_per_week"
+    value="5"
+    min="1"
+    max="7"
+>
+
+</div>
+
+
+<div>
+
+<label>Duration (minutes)</label>
+
+<input
+    type="number"
+    name="duration_minutes"
+    value="60"
+>
+
+</div>
+
+</div>
+
+
+<label>
+    Equipment
+</label>
+
+<input
+    name="equipment"
+    placeholder="Gym / Dumbbells / Bodyweight"
+>
+
+
+<label>
+    Restrictions
+</label>
+
+<textarea
+    name="restrictions"
+></textarea>
+
+
+<input
+    type="hidden"
+    name="exercise_count"
+    value="5"
+>
+
+
+{% for i in range(5) %}
+
+<div class="exercise">
+
+    <h3>
+        Exercise {{ i + 1 }}
+    </h3>
+
+    <div class="grid">
+
+        <div>
+
+            <label>Day</label>
+
+            <input
+                name="day_name_{{ i }}"
+                placeholder="Monday"
+            >
+
+        </div>
+
+        <div>
+
+            <label>Exercise</label>
+
+            <input
+                name="exercise_name_{{ i }}"
+                placeholder="Squats"
+            >
+
+        </div>
+
+        <div>
+
+            <label>Sets</label>
+
+            <input
+                type="number"
+                name="sets_{{ i }}"
+                value="3"
+            >
+
+        </div>
+
+        <div>
+
+            <label>Reps</label>
+
+            <input
+                name="reps_{{ i }}"
+                value="10-12"
+            >
+
+        </div>
+
+        <div>
+
+            <label>Duration</label>
+
+            <input
+                type="number"
+                name="duration_{{ i }}"
+            >
+
+        </div>
+
+        <div>
+
+            <label>Rest seconds</label>
+
+            <input
+                type="number"
+                name="rest_{{ i }}"
+                value="60"
+            >
+
+        </div>
+
+    </div>
+
+
+    <label>
+        Notes
+    </label>
+
+    <textarea
+        name="notes_{{ i }}"
+    ></textarea>
+
+</div>
+
+{% endfor %}
+
+
+<br>
+
+<button type="submit">
+    Save Workout Plan
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

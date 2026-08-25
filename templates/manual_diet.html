@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    Manual Diet
+</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #ecfdf5;
+}
+
+.container {
+    width: 92%;
+    max-width: 1000px;
+    margin: 35px auto;
+}
+
+.card {
+    background: white;
+    padding: 28px;
+    border-radius: 18px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 11px;
+    margin: 7px 0 15px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.meal {
+    background: #f8fafc;
+    padding: 18px;
+    margin-top: 15px;
+    border-radius: 12px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #059669;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #059669;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media(max-width:700px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<a
+    href="{{ url_for(
+        'diet_home',
+        client_id=client.client_id
+    ) }}"
+    class="back"
+>
+    ← Back to Diet
+</a>
+
+<div class="card">
+
+<h1>
+    ✏ Manual Diet Plan
+</h1>
+
+<form method="POST">
+
+<label>
+    Plan Name
+</label>
+
+<input
+    name="plan_name"
+    placeholder="Weight Loss Diet"
+    required
+>
+
+
+<div class="grid">
+
+
+<div>
+
+<label>Goal</label>
+
+<input
+    name="goal"
+    value="{{ client.goal or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Diet Type</label>
+
+<select name="diet_type">
+
+<option>Vegetarian</option>
+<option>Non-Vegetarian</option>
+<option>Vegan</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Daily Calories</label>
+
+<input
+    type="number"
+    name="daily_calories"
+    value="1800"
+>
+
+</div>
+
+
+<div>
+
+<label>Meals Per Day</label>
+
+<input
+    type="number"
+    name="meals_per_day"
+    value="5"
+>
+
+</div>
+
+
+<div>
+
+<label>Protein (g)</label>
+
+<input
+    name="protein_g"
+>
+
+</div>
+
+
+<div>
+
+<label>Carbs (g)</label>
+
+<input
+    name="carbs_g"
+>
+
+</div>
+
+
+<div>
+
+<label>Fat (g)</label>
+
+<input
+    name="fat_g"
+>
+
+</div>
+
+
+<div>
+
+<label>Cuisine</label>
+
+<input
+    name="cuisine"
+    value="Indian"
+>
+
+</div>
+
+
+</div>
+
+
+<label>
+    Restrictions
+</label>
+
+<textarea
+    name="restrictions"
+></textarea>
+
+
+<label>
+    Allergies
+</label>
+
+<textarea
+    name="allergies"
+></textarea>
+
+
+<input
+    type="hidden"
+    name="meal_count"
+    value="5"
+>
+
+
+{% for i in range(5) %}
+
+<div class="meal">
+
+<h3>
+    Meal {{ i + 1 }}
+</h3>
+
+
+<div class="grid">
+
+
+<div>
+
+<label>Day</label>
+
+<input
+    name="meal_day_{{ i }}"
+    placeholder="Monday"
+>
+
+</div>
+
+
+<div>
+
+<label>Meal Type</label>
+
+<input
+    name="meal_type_{{ i }}"
+    placeholder="Breakfast"
+>
+
+</div>
+
+
+<div>
+
+<label>Food</label>
+
+<input
+    name="meal_name_{{ i }}"
+    placeholder="Poha"
+>
+
+</div>
+
+
+<div>
+
+<label>Quantity</label>
+
+<input
+    name="quantity_{{ i }}"
+    placeholder="1 bowl"
+>
+
+</div>
+
+
+<div>
+
+<label>Calories</label>
+
+<input
+    name="calories_{{ i }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Protein</label>
+
+<input
+    name="meal_protein_{{ i }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Carbs</label>
+
+<input
+    name="meal_carbs_{{ i }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Fat</label>
+
+<input
+    name="meal_fat_{{ i }}"
+>
+
+</div>
+
+
+</div>
+
+
+<label>
+    Notes
+</label>
+
+<textarea
+    name="meal_notes_{{ i }}"
+></textarea>
+
+</div>
+
+{% endfor %}
+
+
+<br>
+
+
+<button type="submit">
+    Save Diet Plan
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

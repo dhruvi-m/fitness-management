@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    Edit Diet
+</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #ecfdf5;
+}
+
+.container {
+    width: 92%;
+    max-width: 1000px;
+    margin: 35px auto;
+}
+
+.card {
+    background: white;
+    padding: 28px;
+    border-radius: 18px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+}
+
+.meal {
+    background: #f8fafc;
+    padding: 18px;
+    margin-top: 15px;
+    border-radius: 12px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 11px;
+    margin: 6px 0 15px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #059669;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #059669;
+    text-decoration: none;
+}
+
+@media(max-width:700px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<a
+    href="{{ url_for(
+        'diet_home',
+        client_id=client.client_id
+    ) }}"
+    class="back"
+>
+    ← Back to Diet
+</a>
+
+<div class="card">
+
+<h1>
+    Edit Diet Plan
+</h1>
+
+<form method="POST">
+
+<label>
+    Plan Name
+</label>
+
+<input
+    name="plan_name"
+    value="{{ plan.plan_name }}"
+    required
+>
+
+
+<div class="grid">
+
+<div>
+
+<label>Goal</label>
+
+<input
+    name="goal"
+    value="{{ plan.goal or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Diet Type</label>
+
+<input
+    name="diet_type"
+    value="{{ plan.diet_type or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Daily Calories</label>
+
+<input
+    name="daily_calories"
+    value="{{ plan.daily_calories or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Meals Per Day</label>
+
+<input
+    name="meals_per_day"
+    value="{{ plan.meals_per_day or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Protein</label>
+
+<input
+    name="protein_g"
+    value="{{ plan.protein_g or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Carbs</label>
+
+<input
+    name="carbs_g"
+    value="{{ plan.carbs_g or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Fat</label>
+
+<input
+    name="fat_g"
+    value="{{ plan.fat_g or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Cuisine</label>
+
+<input
+    name="cuisine"
+    value="{{ plan.cuisine or '' }}"
+>
+
+</div>
+
+</div>
+
+
+<label>
+    Restrictions
+</label>
+
+<textarea
+    name="restrictions"
+>{{ plan.restrictions or '' }}</textarea>
+
+
+<label>
+    Allergies
+</label>
+
+<textarea
+    name="allergies"
+>{{ plan.allergies or '' }}</textarea>
+
+
+<input
+    type="hidden"
+    name="meal_count"
+    value="{{ plan.meals|length }}"
+>
+
+
+{% for meal in plan.meals %}
+
+<div class="meal">
+
+<h3>
+    Meal {{ loop.index }}
+</h3>
+
+
+<div class="grid">
+
+<div>
+
+<label>Day</label>
+
+<input
+    name="meal_day_{{ loop.index0 }}"
+    value="{{ meal.day_name }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Meal Type</label>
+
+<input
+    name="meal_type_{{ loop.index0 }}"
+    value="{{ meal.meal_type }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Food</label>
+
+<input
+    name="meal_name_{{ loop.index0 }}"
+    value="{{ meal.meal_name }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Quantity</label>
+
+<input
+    name="quantity_{{ loop.index0 }}"
+    value="{{ meal.quantity or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Calories</label>
+
+<input
+    name="calories_{{ loop.index0 }}"
+    value="{{ meal.calories or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Protein</label>
+
+<input
+    name="meal_protein_{{ loop.index0 }}"
+    value="{{ meal.protein_g or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Carbs</label>
+
+<input
+    name="meal_carbs_{{ loop.index0 }}"
+    value="{{ meal.carbs_g or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Fat</label>
+
+<input
+    name="meal_fat_{{ loop.index0 }}"
+    value="{{ meal.fat_g or '' }}"
+>
+
+</div>
+
+</div>
+
+
+<label>
+    Notes
+</label>
+
+<textarea
+    name="meal_notes_{{ loop.index0 }}"
+>{{ meal.notes or '' }}</textarea>
+
+</div>
+
+{% endfor %}
+
+
+<br>
+
+<button type="submit">
+    Save Diet Changes
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

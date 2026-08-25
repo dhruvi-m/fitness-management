@@ -1,0 +1,462 @@
+<style>
+
+    * {
+        box-sizing: border-box;
+    }
+
+
+    body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+
+        background:
+            linear-gradient(
+                135deg,
+                #f5f7ff,
+                #eef7ff,
+                #f8f5ff
+            );
+
+        color: #1f2937;
+    }
+
+
+    /* =========================
+       NAVBAR
+       ========================= */
+
+    .navbar {
+
+        background:
+            linear-gradient(
+                135deg,
+                #4f46e5,
+                #7c3aed
+            );
+
+        color: white;
+
+        padding: 20px 50px;
+
+        box-shadow:
+            0 4px 15px rgba(79, 70, 229, 0.25);
+    }
+
+
+    .navbar h2 {
+
+        margin: 0;
+
+        font-size: 24px;
+
+        font-weight: 700;
+    }
+
+
+    /* =========================
+       MAIN CONTAINER
+       ========================= */
+
+    .container {
+
+        width: 92%;
+
+        max-width: 1200px;
+
+        margin: 40px auto;
+    }
+
+
+    /* =========================
+       PROFILE HEADER
+       ========================= */
+
+    .profile-header {
+
+        background:
+            linear-gradient(
+                135deg,
+                #4f46e5,
+                #7c3aed,
+                #9333ea
+            );
+
+        color: white;
+
+        padding: 35px;
+
+        border-radius: 20px;
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        margin-bottom: 30px;
+
+        box-shadow:
+            0 10px 30px rgba(79, 70, 229, 0.25);
+    }
+
+
+    .profile-header h1 {
+
+        margin: 5px 0;
+
+        font-size: 38px;
+    }
+
+
+    .small-text {
+
+        font-size: 13px;
+
+        letter-spacing: 2px;
+
+        opacity: 0.8;
+
+        margin: 0;
+    }
+
+
+    .client-code {
+
+        margin: 5px 0;
+
+        opacity: 0.9;
+
+        font-size: 15px;
+    }
+
+
+    .profile-phone {
+
+        background: rgba(255,255,255,0.15);
+
+        padding: 15px 20px;
+
+        border-radius: 12px;
+
+        font-size: 16px;
+    }
+
+
+    /* =========================
+       SECTION TITLE
+       ========================= */
+
+    .section-title {
+
+        margin-top: 30px;
+
+        margin-bottom: 18px;
+    }
+
+
+    .section-title h2 {
+
+        margin-bottom: 5px;
+
+        font-size: 25px;
+    }
+
+
+    .section-title p {
+
+        color: #6b7280;
+
+        margin-top: 0;
+    }
+
+
+    /* =========================
+       INFORMATION CARDS
+       ========================= */
+
+    .info-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                3,
+                1fr
+            );
+
+        gap: 18px;
+    }
+
+
+    .info-card {
+
+        background: white;
+
+        padding: 22px;
+
+        border-radius: 15px;
+
+        box-shadow:
+            0 5px 20px
+            rgba(0,0,0,0.06);
+
+        border-left: 5px solid;
+
+        transition:
+            transform 0.2s;
+    }
+
+
+    .info-card:hover {
+
+        transform:
+            translateY(-3px);
+    }
+
+
+    .info-card .label {
+
+        display: block;
+
+        color: #6b7280;
+
+        font-size: 13px;
+
+        margin-bottom: 8px;
+    }
+
+
+    .info-card strong {
+
+        font-size: 18px;
+    }
+
+
+    .blue {
+        border-color: #3b82f6;
+    }
+
+
+    .purple {
+        border-color: #8b5cf6;
+    }
+
+
+    .green {
+        border-color: #10b981;
+    }
+
+
+    .orange {
+        border-color: #f59e0b;
+    }
+
+
+    .pink {
+        border-color: #ec4899;
+    }
+
+
+    .teal {
+        border-color: #14b8a6;
+    }
+
+
+    /* =========================
+       NOTES
+       ========================= */
+
+    .notes-card {
+
+        background: white;
+
+        padding: 25px;
+
+        margin-top: 25px;
+
+        border-radius: 15px;
+
+        box-shadow:
+            0 5px 20px
+            rgba(0,0,0,0.06);
+    }
+
+
+    .notes-card h2 {
+
+        margin-top: 0;
+    }
+
+
+    .notes-card p {
+
+        color: #6b7280;
+
+        line-height: 1.6;
+    }
+
+
+    /* =========================
+       MANAGEMENT CARDS
+       ========================= */
+
+    .management-grid {
+
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                3,
+                1fr
+            );
+
+        gap: 20px;
+    }
+
+
+    .management-card {
+
+        text-decoration: none;
+
+        color: #1f2937;
+
+        background: white;
+
+        padding: 25px;
+
+        border-radius: 18px;
+
+        box-shadow:
+            0 5px 20px
+            rgba(0,0,0,0.07);
+
+        transition:
+            transform 0.2s,
+            box-shadow 0.2s;
+    }
+
+
+    .management-card:hover {
+
+        transform:
+            translateY(-5px);
+
+        box-shadow:
+            0 12px 30px
+            rgba(0,0,0,0.12);
+    }
+
+
+    .management-card .icon {
+
+        font-size: 35px;
+
+        margin-bottom: 10px;
+    }
+
+
+    .management-card h3 {
+
+        margin: 5px 0;
+
+        font-size: 21px;
+    }
+
+
+    .management-card p {
+
+        color: #6b7280;
+
+        line-height: 1.5;
+
+        min-height: 45px;
+    }
+
+
+    .management-card span {
+
+        font-weight: bold;
+    }
+
+
+    .workout {
+
+        border-top: 5px solid #3b82f6;
+    }
+
+
+    .diet {
+
+        border-top: 5px solid #10b981;
+    }
+
+
+    .progress {
+
+        border-top: 5px solid #f59e0b;
+    }
+
+
+    .photos {
+
+        border-top: 5px solid #ec4899;
+    }
+
+
+    .pdf {
+
+        border-top: 5px solid #ef4444;
+    }
+
+
+    /* =========================
+       RESPONSIVE
+       ========================= */
+
+    @media (max-width: 900px) {
+
+        .info-grid {
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    1fr
+                );
+        }
+
+        .management-grid {
+
+            grid-template-columns:
+                repeat(
+                    2,
+                    1fr
+                );
+        }
+    }
+
+
+    @media (max-width: 600px) {
+
+        .profile-header {
+
+            flex-direction: column;
+
+            align-items: flex-start;
+
+            gap: 20px;
+        }
+
+        .info-grid,
+        .management-grid {
+
+            grid-template-columns:
+                1fr;
+        }
+
+        .profile-header h1 {
+
+            font-size: 30px;
+        }
+    }
+
+</style>

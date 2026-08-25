@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+    AI Workout Preview
+</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f3ff;
+}
+
+.container {
+    width: 92%;
+    max-width: 1000px;
+    margin: 35px auto;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    margin-bottom: 18px;
+}
+
+.day {
+    background: #f8fafc;
+    padding: 20px;
+    border-radius: 12px;
+    margin-top: 15px;
+}
+
+.exercise {
+    border-left: 4px solid #7c3aed;
+    padding: 12px;
+    margin-top: 10px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #7c3aed;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>
+    🤖 AI Workout Preview
+</h1>
+
+<h2>
+    {{ workout.plan_name }}
+</h2>
+
+<p>
+    Goal: {{ workout.goal }}
+</p>
+
+
+{% for day in workout.days %}
+
+<div class="day">
+
+<h3>
+    {{ day.day_name }}
+</h3>
+
+
+{% for exercise in day.exercises %}
+
+<div class="exercise">
+
+<strong>
+    {{ exercise.exercise_name }}
+</strong>
+
+<br>
+
+Sets:
+{{ exercise.sets or "-" }}
+
+|
+
+Reps:
+{{ exercise.reps or "-" }}
+
+|
+
+Rest:
+{{ exercise.rest_seconds or "-" }} sec
+
+
+{% if exercise.notes %}
+
+<p>
+    {{ exercise.notes }}
+</p>
+
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endfor %}
+
+
+<form
+    method="POST"
+    action="{{ url_for(
+        'save_ai_workout',
+        client_id=client.client_id
+    ) }}"
+>
+
+<input
+    type="hidden"
+    name="workout_json"
+    value="{{ workout|tojson|forceescape }}"
+>
+
+
+<br>
+
+<button type="submit">
+    Save AI Workout
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

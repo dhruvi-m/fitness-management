@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    Fitness Management
+</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #f5f3ff,
+            #ecfeff
+        );
+
+    color: #1f2937;
+}
+
+
+.navbar {
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+    color: white;
+
+    padding: 20px 40px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+}
+
+
+.container {
+
+    width: 92%;
+
+    max-width: 1200px;
+
+    margin: 40px auto;
+}
+
+
+.card {
+
+    background: white;
+
+    padding: 28px;
+
+    border-radius: 20px;
+
+    margin-bottom: 25px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.07);
+}
+
+
+input {
+
+    width: 100%;
+
+    padding: 13px;
+
+    margin: 8px 0 18px;
+
+    border:
+        1px solid #d1d5db;
+
+    border-radius: 9px;
+
+    font-size: 15px;
+}
+
+
+.button,
+button {
+
+    display: inline-block;
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+    color: white;
+
+    border: none;
+
+    padding: 12px 18px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+
+.data-button {
+
+    background:
+        linear-gradient(
+            135deg,
+            #0f766e,
+            #059669
+        );
+}
+
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+}
+
+
+th,
+td {
+
+    padding: 12px;
+
+    border-bottom:
+        1px solid #e5e7eb;
+
+    text-align: left;
+}
+
+
+th {
+
+    background: #eef2ff;
+}
+
+
+.data-card {
+
+    background:
+        linear-gradient(
+            135deg,
+            #ecfdf5,
+            #eff6ff
+        );
+
+    border-left:
+        6px solid #059669;
+}
+
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="navbar">
+
+    💪 Fitness Management System
+
+</div>
+
+
+<div class="container">
+
+
+<!-- ===================================================== -->
+<!-- PHONE -->
+<!-- ===================================================== -->
+
+<div class="card">
+
+
+<h1>
+    Client Management
+</h1>
+
+
+<p>
+
+    Enter the client's phone number.
+    Existing clients will open automatically.
+    A new phone number will create a new client.
+
+</p>
+
+
+<form
+    method="POST"
+    action="{{ url_for(
+        'check_phone'
+    ) }}"
+>
+
+
+<label>
+    Phone Number
+</label>
+
+
+<input
+    type="text"
+    name="phone"
+    placeholder="Enter phone number"
+    required
+>
+
+
+<button
+    type="submit"
+>
+    Continue
+</button>
+
+
+</form>
+
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- DATA CENTER -->
+<!-- ===================================================== -->
+
+<div class="card data-card">
+
+
+<h2>
+    📊 Data Center
+</h2>
+
+
+<p>
+
+    Check how many clients have joined,
+    their joining dates,
+    latest workout,
+    diet,
+    progress,
+    and stored PDF/photo records.
+
+</p>
+
+
+<a
+    class="button data-button"
+    href="{{ url_for(
+        'data_center'
+    ) }}"
+>
+
+    Open Data Center →
+
+</a>
+
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- REGISTERED CLIENTS -->
+<!-- ===================================================== -->
+
+<div class="card">
+
+
+<h2>
+    👥 Registered Clients
+</h2>
+
+
+{% if clients %}
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+    <th>
+        Client ID
+    </th>
+
+    <th>
+        Name
+    </th>
+
+    <th>
+        Phone
+    </th>
+
+    <th>
+        Joined
+    </th>
+
+    <th>
+        Goal
+    </th>
+
+    <th>
+        Action
+    </th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+{% for client in clients %}
+
+
+<tr>
+
+
+<td>
+
+    {{ client.client_code }}
+
+</td>
+
+
+<td>
+
+    {{ client.full_name }}
+
+</td>
+
+
+<td>
+
+    {{ client.phone }}
+
+</td>
+
+
+<td>
+
+    {{ client.created_at.strftime(
+        "%d-%m-%Y"
+    ) }}
+
+</td>
+
+
+<td>
+
+    {{ client.goal or "-" }}
+
+</td>
+
+
+<td>
+
+    <a
+        class="button"
+        href="{{ url_for(
+            'client_profile',
+            client_id=client.client_id
+        ) }}"
+    >
+
+        View
+
+    </a>
+
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+
+{% else %}
+
+
+<p>
+    No clients registered yet.
+</p>
+
+
+{% endif %}
+
+
+</div>
+
+
+</div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    Progress - {{ client.full_name }}
+</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #fff7ed,
+            #f5f3ff,
+            #eff6ff
+        );
+
+    color: #1f2937;
+}
+
+.header {
+
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #ef4444,
+            #8b5cf6
+        );
+
+    color: white;
+
+    padding: 35px 50px;
+}
+
+.container {
+
+    width: 92%;
+
+    max-width: 1200px;
+
+    margin: 35px auto;
+}
+
+.back {
+
+    color: #7c3aed;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+.top-actions {
+
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+    margin-top: 20px;
+}
+
+.button {
+
+    display: inline-block;
+
+    padding: 13px 20px;
+
+    border-radius: 10px;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+.add {
+    background: #f59e0b;
+}
+
+.photo {
+    background: #ec4899;
+}
+
+.pdf {
+    background: #ef4444;
+}
+
+.ai {
+    background: #7c3aed;
+}
+
+.card {
+
+    background: white;
+
+    padding: 28px;
+
+    border-radius: 20px;
+
+    margin-top: 25px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.07);
+}
+
+.summary-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4,1fr);
+
+    gap: 18px;
+}
+
+.metric {
+
+    background: white;
+
+    padding: 22px;
+
+    border-radius: 16px;
+
+    border-top: 5px solid #4f46e5;
+
+    box-shadow:
+        0 5px 18px
+        rgba(0,0,0,.06);
+}
+
+.metric .label {
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+    display: block;
+
+    margin-bottom: 8px;
+}
+
+.metric .value {
+
+    font-size: 25px;
+
+    font-weight: bold;
+}
+
+.green {
+    border-color: #10b981;
+}
+
+.orange {
+    border-color: #f59e0b;
+}
+
+.pink {
+    border-color: #ec4899;
+}
+
+.purple {
+    border-color: #8b5cf6;
+}
+
+.blue {
+    border-color: #3b82f6;
+}
+
+.history {
+
+    border-left: 5px solid #7c3aed;
+
+    background: #fafafa;
+
+    padding: 22px;
+
+    margin-bottom: 15px;
+
+    border-radius: 12px;
+}
+
+.history-top {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 10px;
+}
+
+.badge {
+
+    background: #ede9fe;
+
+    color: #6d28d9;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.actions {
+
+    display: flex;
+
+    gap: 8px;
+
+    margin-top: 15px;
+
+    flex-wrap: wrap;
+}
+
+.edit {
+
+    background: #dbeafe;
+
+    color: #1d4ed8;
+
+    padding: 8px 13px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+.delete {
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+
+    padding: 8px 13px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.chart {
+
+    height: 400px;
+
+    position: relative;
+}
+
+.ai-box {
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #f5f3ff
+        );
+
+    padding: 25px;
+
+    border-radius: 15px;
+
+    margin-top: 20px;
+}
+
+.ai-box li {
+
+    margin-bottom: 8px;
+
+    line-height: 1.5;
+}
+
+@media(max-width:900px) {
+
+    .summary-grid {
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+}
+
+@media(max-width:600px) {
+
+    .summary-grid {
+
+        grid-template-columns: 1fr;
+
+    }
+
+    .header {
+
+        padding: 25px;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+    <h1>
+        📈 Progress Tracking
+    </h1>
+
+    <p>
+        {{ client.full_name }}
+        —
+        {{ client.client_code }}
+    </p>
+
+    <div class="top-actions">
+
+        <a
+            href="{{ url_for(
+                'add_progress',
+                client_id=client.client_id
+            ) }}"
+            class="button add"
+        >
+            + Add New Progress
+        </a>
+
+        <a
+            href="{{ url_for(
+                'progress_photos',
+                client_id=client.client_id
+            ) }}"
+            class="button photo"
+        >
+            📸 Photos
+        </a>
+
+        <a
+            href="{{ url_for(
+                'generate_report',
+                client_id=client.client_id
+            ) }}"
+            class="button pdf"
+        >
+            📄 Generate PDF
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="container">
+
+
+<a
+    href="{{ url_for(
+        'client_profile',
+        client_id=client.client_id
+    ) }}"
+    class="back"
+>
+    ← Back to Client
+</a>
+
+
+<!-- SUMMARY -->
+
+<div class="card">
+
+    <h2>
+        Current Progress
+    </h2>
+
+    <div class="summary-grid">
+
+
+        <div class="metric blue">
+
+            <span class="label">
+                Starting Weight
+            </span>
+
+            <div class="value">
+
+                {% if calculated.starting_weight is not none %}
+
+                    {{ "%.1f"|format(
+                        calculated.starting_weight
+                    ) }} kg
+
+                {% else %}
+
+                    -
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <div class="metric green">
+
+            <span class="label">
+                Current Weight
+            </span>
+
+            <div class="value">
+
+                {% if calculated.current_weight is not none %}
+
+                    {{ "%.1f"|format(
+                        calculated.current_weight
+                    ) }} kg
+
+                {% else %}
+
+                    -
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <div class="metric orange">
+
+            <span class="label">
+                Total Weight Change
+            </span>
+
+            <div class="value">
+
+                {% if calculated.weight_change is not none %}
+
+                    {{ "%+.1f"|format(
+                        calculated.weight_change
+                    ) }} kg
+
+                {% else %}
+
+                    -
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <div class="metric purple">
+
+            <span class="label">
+                Progress Score
+            </span>
+
+            <div class="value">
+                {{ "%.0f"|format(
+                    calculated.score
+                ) }}/100
+            </div>
+
+        </div>
+
+
+        <div class="metric pink">
+
+            <span class="label">
+                Starting Waist
+            </span>
+
+            <div class="value">
+
+                {% if calculated.starting_waist is not none %}
+
+                    {{ "%.1f"|format(
+                        calculated.starting_waist
+                    ) }} cm
+
+                {% else %}
+
+                    -
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <div class="metric teal">
+
+            <span class="label">
+                Current Waist
+            </span>
+
+            <div class="value">
+
+                {% if calculated.current_waist is not none %}
+
+                    {{ "%.1f"|format(
+                        calculated.current_waist
+                    ) }} cm
+
+                {% else %}
+
+                    -
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <div class="metric orange">
+
+            <span class="label">
+                Waist Change
+            </span>
+
+            <div class="value">
+
+                {% if calculated.waist_change is not none %}
+
+                    {{ "%+.1f"|format(
+                        calculated.waist_change
+                    ) }} cm
+
+                {% else %}
+
+                    -
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+
+        <div class="metric blue">
+
+            <span class="label">
+                Status
+            </span>
+
+            <div
+                class="value"
+                style="font-size:18px;"
+            >
+                {{ calculated.status }}
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+<!-- SUMMARY -->
+
+<div class="card">
+
+    <h2>
+        📝 Description Summary
+    </h2>
+
+    <p
+        style="
+            line-height:1.8;
+            color:#4b5563;
+        "
+    >
+
+        {{ calculated.summary }}
+
+    </p>
+
+
+    <h3>
+        Strengths
+    </h3>
+
+    <ul>
+
+        {% for item in calculated.strengths %}
+
+        <li>
+            {{ item }}
+        </li>
+
+        {% endfor %}
+
+    </ul>
+
+
+    <h3>
+        Areas to Improve
+    </h3>
+
+    <ul>
+
+        {% for item in calculated.areas %}
+
+        <li>
+            {{ item }}
+        </li>
+
+        {% endfor %}
+
+    </ul>
+
+
+</div>
+
+
+<!-- GRAPH -->
+
+<div class="card">
+
+    <h2>
+        📊 Weight Trend
+    </h2>
+
+    <div class="chart">
+
+        <canvas id="weightChart"></canvas>
+
+    </div>
+
+</div>
+
+
+<!-- AI -->
+
+<div class="card">
+
+    <h2>
+        🤖 AI Progress Analysis
+    </h2>
+
+    <form
+        method="POST"
+        action="{{ url_for(
+            'generate_ai_analysis',
+            client_id=client.client_id
+        ) }}"
+    >
+
+        <label>
+
+            <input
+                type="checkbox"
+                name="include_in_report"
+                checked
+            >
+
+            Include AI analysis in PDF
+
+        </label>
+
+
+        <br><br>
+
+
+        <button
+            type="submit"
+            class="button ai"
+            style="border:none;"
+        >
+            Generate AI Analysis
+        </button>
+
+    </form>
+
+
+    {% if analysis %}
+
+
+    <div class="ai-box">
+
+        <h3>
+            {{ analysis.status }}
+        </h3>
+
+
+        <p>
+            {{ analysis.summary }}
+        </p>
+
+
+        <h3>
+            ✅ Strengths
+        </h3>
+
+        <ul>
+
+            {% for item in analysis.strengths|from_json %}
+
+                <li>
+                    {{ item }}
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+
+        <h3>
+            ⚠️ Areas to Improve
+        </h3>
+
+        <ul>
+
+            {% for item in analysis.areas_to_improve|from_json %}
+
+                <li>
+                    {{ item }}
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+
+        <h3>
+            🎯 Recommendations
+        </h3>
+
+        <ul>
+
+            {% for item in analysis.recommendations|from_json %}
+
+                <li>
+                    {{ item }}
+                </li>
+
+            {% endfor %}
+
+        </ul>
+
+    </div>
+
+
+    {% endif %}
+
+</div>
+
+
+<!-- HISTORY -->
+
+<div class="card">
+
+    <h2>
+        📋 Complete Progress History
+    </h2>
+
+
+    {% if progress_updates %}
+
+
+        {% for record in progress_updates %}
+
+        <div class="history">
+
+            <div class="history-top">
+
+                <h3>
+                    {{ record.period_label }}
+                </h3>
+
+                <span class="badge">
+                    {{ record.update_type }}
+                </span>
+
+            </div>
+
+
+            <p>
+                <strong>Date:</strong>
+                {{ record.update_date.strftime(
+                    "%d-%m-%Y"
+                ) }}
+            </p>
+
+
+            <p>
+                <strong>Weight:</strong>
+                {{ record.weight_kg or "-" }} kg
+            </p>
+
+
+            <p>
+                <strong>Waist:</strong>
+                {{ record.waist_cm or "-" }} cm
+            </p>
+
+
+            <p>
+                <strong>Body Fat:</strong>
+                {{ record.body_fat_percent or "-" }}%
+            </p>
+
+
+            <p>
+                <strong>Workout:</strong>
+                {{ record.workout_adherence or "-" }}%
+            </p>
+
+
+            <p>
+                <strong>Diet:</strong>
+                {{ record.diet_adherence or "-" }}%
+            </p>
+
+
+            {% if record.trainer_notes %}
+
+            <p>
+                <strong>Notes:</strong>
+                {{ record.trainer_notes }}
+            </p>
+
+            {% endif %}
+
+
+            <div class="actions">
+
+                <a
+                    href="{{ url_for(
+                        'edit_progress',
+                        progress_id=record.progress_id
+                    ) }}"
+                    class="edit"
+                >
+                    Edit
+                </a>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'delete_progress',
+                        progress_id=record.progress_id
+                    ) }}"
+                    onsubmit="return confirm(
+                        'Delete this progress record?'
+                    );"
+                >
+
+                    <button
+                        type="submit"
+                        class="delete"
+                    >
+                        Delete
+                    </button>
+
+                </form>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+        <p>
+            No progress records yet.
+        </p>
+
+    {% endif %}
+
+
+</div>
+
+
+</div>
+
+
+<script>
+
+const labels = {{ chart_labels|tojson }};
+
+const weights = {{ chart_weights|tojson }};
+
+
+new Chart(
+    document.getElementById(
+        "weightChart"
+    ),
+    {
+        type: "line",
+
+        data: {
+
+            labels: labels,
+
+            datasets: [
+
+                {
+                    label: "Weight (kg)",
+
+                    data: weights,
+
+                    borderWidth: 3,
+
+                    tension: 0.3,
+
+                    spanGaps: true
+                }
+
+            ]
+
+        },
+
+        options: {
+
+            responsive: true,
+
+            maintainAspectRatio: false,
+
+            scales: {
+
+                y: {
+                    beginAtZero: false
+                }
+
+            }
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>

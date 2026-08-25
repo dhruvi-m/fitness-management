@@ -1,0 +1,7 @@
+Flask
+Flask-SQLAlchemy
+python-dotenv
+openai
+reportlab
+gunicorn
+Werkzeug

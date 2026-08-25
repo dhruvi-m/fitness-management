@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>Diet Plans</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ecfdf5,
+            #eff6ff,
+            #f5f3ff
+        );
+
+    color: #1f2937;
+}
+
+.header {
+
+    background:
+        linear-gradient(
+            135deg,
+            #059669,
+            #10b981,
+            #14b8a6
+        );
+
+    color: white;
+
+    padding: 35px 50px;
+}
+
+.container {
+
+    width: 92%;
+
+    max-width: 1100px;
+
+    margin: 35px auto;
+}
+
+.back {
+
+    display: inline-block;
+
+    margin-bottom: 20px;
+
+    color: #059669;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+.top-buttons {
+
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+}
+
+.create-button {
+
+    padding: 28px;
+
+    border-radius: 20px;
+
+    color: white;
+
+    text-decoration: none;
+}
+
+.manual {
+
+    background:
+        linear-gradient(
+            135deg,
+            #059669,
+            #10b981
+        );
+}
+
+.ai {
+
+    background:
+        linear-gradient(
+            135deg,
+            #7c3aed,
+            #9333ea
+        );
+}
+
+.card {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    margin-bottom: 18px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.07);
+}
+
+.plan {
+
+    padding: 22px;
+
+    margin-top: 15px;
+
+    border-left: 5px solid #10b981;
+
+    background: #fafafa;
+
+    border-radius: 12px;
+}
+
+.badge {
+
+    display: inline-block;
+
+    background: #dcfce7;
+
+    color: #166534;
+
+    padding: 6px 12px;
+
+    border-radius: 20px;
+
+    font-size: 12px;
+
+    font-weight: bold;
+}
+
+.buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-top: 18px;
+}
+
+.btn {
+
+    padding: 10px 15px;
+
+    border-radius: 8px;
+
+    text-decoration: none;
+
+    border: none;
+
+    cursor: pointer;
+
+    font-weight: bold;
+}
+
+.edit {
+
+    background: #dbeafe;
+
+    color: #1d4ed8;
+}
+
+.pdf {
+
+    background: #dcfce7;
+
+    color: #166534;
+}
+
+.delete {
+
+    background: #fee2e2;
+
+    color: #b91c1c;
+}
+
+@media(max-width:700px) {
+
+    .top-buttons {
+
+        grid-template-columns: 1fr;
+
+    }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+
+<div class="header">
+
+    <h1>
+        🥗 Diet Plans
+    </h1>
+
+    <p>
+        {{ client.full_name }}
+        —
+        {{ client.client_code }}
+    </p>
+
+</div>
+
+
+<div class="container">
+
+
+<a
+    href="{{ url_for(
+        'client_profile',
+        client_id=client.client_id
+    ) }}"
+    class="back"
+>
+    ← Back to Client
+</a>
+
+
+<div class="top-buttons">
+
+
+<a
+    href="{{ url_for(
+        'manual_diet',
+        client_id=client.client_id
+    ) }}"
+    class="create-button manual"
+>
+
+    <h2>
+        ✏ Manual Diet
+    </h2>
+
+    <p>
+        Create a diet plan manually.
+    </p>
+
+</a>
+
+
+<a
+    href="{{ url_for(
+        'ai_diet',
+        client_id=client.client_id
+    ) }}"
+    class="create-button ai"
+>
+
+    <h2>
+        🤖 AI Diet
+    </h2>
+
+    <p>
+        Generate a diet plan using AI.
+    </p>
+
+</a>
+
+
+</div>
+
+
+<div class="card">
+
+    <h2>
+        📋 Diet History
+    </h2>
+
+
+    {% if diet_plans %}
+
+
+        {% for plan in diet_plans %}
+
+        <div class="plan">
+
+            <h2>
+                {{ plan.plan_name }}
+            </h2>
+
+            <span class="badge">
+                {{ plan.plan_type }}
+            </span>
+
+
+            <p>
+                <strong>Goal:</strong>
+                {{ plan.goal or "-" }}
+            </p>
+
+
+            <p>
+                <strong>Diet Type:</strong>
+                {{ plan.diet_type or "-" }}
+            </p>
+
+
+            <p>
+                <strong>Calories:</strong>
+                {{ plan.daily_calories or "-" }}
+            </p>
+
+
+            <p>
+                <strong>Meals:</strong>
+                {{ plan.meals|length }}
+            </p>
+
+
+            <p>
+                <strong>Created:</strong>
+                {{ plan.created_at.strftime(
+                    "%d-%m-%Y"
+                ) }}
+            </p>
+
+
+            <div class="buttons">
+
+
+                <a
+                    href="{{ url_for(
+                        'edit_diet',
+                        plan_id=plan.diet_plan_id
+                    ) }}"
+                    class="btn edit"
+                >
+                    ✏ Edit
+                </a>
+
+
+                <a
+                    href="{{ url_for(
+                        'diet_pdf',
+                        plan_id=plan.diet_plan_id
+                    ) }}"
+                    class="btn pdf"
+                >
+                    📄 Save PDF
+                </a>
+
+
+                <form
+                    method="POST"
+                    action="{{ url_for(
+                        'delete_diet',
+                        plan_id=plan.diet_plan_id
+                    ) }}"
+                    onsubmit="return confirm(
+                        'Delete this diet plan?'
+                    );"
+                >
+
+                    <button
+                        type="submit"
+                        class="btn delete"
+                    >
+                        🗑 Delete
+                    </button>
+
+                </form>
+
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+
+    {% else %}
+
+        <p>
+            No diet plans yet.
+        </p>
+
+    {% endif %}
+
+</div>
+
+
+</div>
+
+
+</body>
+
+</html>

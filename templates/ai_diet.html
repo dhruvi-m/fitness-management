@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    AI Diet
+</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f3ff;
+}
+
+.container {
+    max-width: 900px;
+    width: 92%;
+    margin: 40px auto;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 7px 0 18px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #7c3aed;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #7c3aed;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media(max-width:700px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<a
+    href="{{ url_for(
+        'diet_home',
+        client_id=client.client_id
+    ) }}"
+    class="back"
+>
+    ← Back to Diet
+</a>
+
+<div class="card">
+
+<h1>
+    🤖 AI Diet Generator
+</h1>
+
+<p>
+    Client:
+    <strong>
+        {{ client.full_name }}
+    </strong>
+</p>
+
+<form method="POST">
+
+<label>
+    Goal
+</label>
+
+<input
+    name="goal"
+    value="{{ client.goal or '' }}"
+>
+
+
+<div class="grid">
+
+
+<div>
+
+<label>Diet Type</label>
+
+<select name="diet_type">
+
+<option>Vegetarian</option>
+<option>Non-Vegetarian</option>
+<option>Vegan</option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>Daily Calories</label>
+
+<input
+    name="daily_calories"
+    value="1800"
+>
+
+</div>
+
+
+<div>
+
+<label>Meals Per Day</label>
+
+<input
+    name="meals_per_day"
+    value="5"
+>
+
+</div>
+
+
+<div>
+
+<label>Cuisine</label>
+
+<input
+    name="cuisine"
+    value="Indian"
+>
+
+</div>
+
+
+</div>
+
+
+<label>
+    Restrictions
+</label>
+
+<textarea
+    name="restrictions"
+></textarea>
+
+
+<label>
+    Allergies
+</label>
+
+<textarea
+    name="allergies"
+></textarea>
+
+
+<button type="submit">
+    Generate AI Diet
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,7 @@
+venv/
+.env
+__pycache__/
+*.pyc
+fitness.db
+uploads/
+reports/

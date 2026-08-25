@@ -1,0 +1,1110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0">
+
+<title>
+    {{ client.full_name }} - Client Profile
+</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eef2ff,
+            #f5f3ff,
+            #ecfeff
+        );
+
+    color: #1f2937;
+}
+
+
+/* NAVBAR */
+
+.navbar {
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+    color: white;
+
+    padding: 18px 40px;
+
+    font-size: 18px;
+
+    font-weight: bold;
+}
+
+
+/* MAIN */
+
+.container {
+
+    width: 92%;
+
+    max-width: 1250px;
+
+    margin: 30px auto;
+}
+
+
+/* HERO */
+
+.hero {
+
+    background:
+        linear-gradient(
+            135deg,
+            #4f46e5,
+            #7c3aed
+        );
+
+    color: white;
+
+    padding: 32px;
+
+    border-radius: 24px;
+
+    box-shadow:
+        0 10px 30px
+        rgba(79, 70, 229, 0.25);
+}
+
+.hero h1 {
+
+    margin: 8px 0;
+
+    font-size: 38px;
+}
+
+.hero p {
+
+    margin: 7px 0;
+}
+
+
+/* BUTTONS */
+
+.buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-top: 20px;
+}
+
+.button {
+
+    display: inline-block;
+
+    padding: 11px 16px;
+
+    border-radius: 9px;
+
+    border: none;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.white {
+
+    background: white;
+
+    color: #4f46e5;
+}
+
+.red {
+
+    background: #ef4444;
+
+    color: white;
+}
+
+.pdf {
+
+    background: #f59e0b;
+
+    color: white;
+}
+
+.data {
+
+    background: #0f766e;
+
+    color: white;
+}
+
+
+/* SECTION */
+
+.section {
+
+    margin-top: 30px;
+}
+
+
+/* METRICS */
+
+.grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 18px;
+}
+
+.metric {
+
+    background: white;
+
+    padding: 22px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.07);
+
+    border-top: 5px solid #4f46e5;
+}
+
+.metric.green {
+
+    border-top-color: #10b981;
+}
+
+.metric.orange {
+
+    border-top-color: #f59e0b;
+}
+
+.metric.pink {
+
+    border-top-color: #ec4899;
+}
+
+.label {
+
+    display: block;
+
+    color: #6b7280;
+
+    font-size: 13px;
+
+    margin-bottom: 8px;
+}
+
+.value {
+
+    font-size: 27px;
+
+    font-weight: bold;
+}
+
+
+/* FEATURES */
+
+.feature-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(5, 1fr);
+
+    gap: 16px;
+}
+
+.feature {
+
+    color: #1f2937;
+
+    text-decoration: none;
+
+    background: white;
+
+    padding: 24px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.07);
+
+    border-top: 6px solid #4f46e5;
+
+    transition: .2s;
+}
+
+.feature:hover {
+
+    transform: translateY(-4px);
+
+    box-shadow:
+        0 12px 30px
+        rgba(0,0,0,.12);
+}
+
+
+/* CARDS */
+
+.card {
+
+    background: white;
+
+    padding: 25px;
+
+    border-radius: 18px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.07);
+}
+
+.latest-box {
+
+    background: #f8fafc;
+
+    padding: 18px;
+
+    border-radius: 14px;
+
+    margin-top: 12px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width: 1050px) {
+
+    .grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+    .feature-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+}
+
+
+@media(max-width: 600px) {
+
+    .grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .feature-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+    .hero h1 {
+
+        font-size: 28px;
+    }
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="navbar">
+
+    💪 Fitness Management
+
+</div>
+
+
+<div class="container">
+
+
+<!-- ===================================================== -->
+<!-- CLIENT HEADER -->
+<!-- ===================================================== -->
+
+<div class="hero">
+
+    <small>
+        CLIENT PROFILE
+    </small>
+
+
+    <h1>
+        {{ client.full_name }}
+    </h1>
+
+
+    <p>
+        <strong>
+            Client ID:
+        </strong>
+
+        {{ client.client_code }}
+    </p>
+
+
+    <p>
+        <strong>
+            Phone:
+        </strong>
+
+        {{ client.phone }}
+    </p>
+
+
+    <p>
+        <strong>
+            Joined:
+        </strong>
+
+        {{ client.created_at.strftime(
+            "%d-%m-%Y"
+        ) }}
+    </p>
+
+
+    <div class="buttons">
+
+
+        <a
+            class="button white"
+            href="{{ url_for(
+                'edit_client',
+                client_id=client.client_id
+            ) }}"
+        >
+            ✏ Edit Client
+        </a>
+
+
+        <a
+            class="button pdf"
+            href="{{ url_for(
+                'generate_report',
+                client_id=client.client_id
+            ) }}"
+        >
+            📄 Generate Full PDF
+        </a>
+
+
+        <a
+            class="button data"
+            href="{{ url_for(
+                'data_center'
+            ) }}"
+        >
+            📊 Data Center
+        </a>
+
+
+        <form
+            method="POST"
+            action="{{ url_for(
+                'delete_client',
+                client_id=client.client_id
+            ) }}"
+            onsubmit="
+                return confirm(
+                    'Delete this client and all related data?'
+                );
+            "
+        >
+
+            <button
+                type="submit"
+                class="button red"
+            >
+                🗑 Delete Client
+            </button>
+
+        </form>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- CURRENT PROGRESS -->
+<!-- ===================================================== -->
+
+<div class="section">
+
+<h2>
+    📈 Current Progress
+</h2>
+
+
+<div class="grid">
+
+
+<div class="metric">
+
+    <span class="label">
+        Starting Weight
+    </span>
+
+    <div class="value">
+
+        {% if calculated.starting_weight is not none %}
+
+            {{ "%.1f"|format(
+                calculated.starting_weight
+            ) }} kg
+
+        {% else %}
+
+            -
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+
+<div class="metric green">
+
+    <span class="label">
+        Current Weight
+    </span>
+
+    <div class="value">
+
+        {% if calculated.current_weight is not none %}
+
+            {{ "%.1f"|format(
+                calculated.current_weight
+            ) }} kg
+
+        {% else %}
+
+            -
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+
+<div class="metric orange">
+
+    <span class="label">
+        Weight Change
+    </span>
+
+    <div class="value">
+
+        {% if calculated.weight_change is not none %}
+
+            {{ "%+.1f"|format(
+                calculated.weight_change
+            ) }} kg
+
+        {% else %}
+
+            -
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+
+<div class="metric pink">
+
+    <span class="label">
+        Progress Score
+    </span>
+
+    <div class="value">
+
+        {{ "%.0f"|format(
+            calculated.score
+        ) }}/100
+
+    </div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- MANAGEMENT -->
+<!-- ===================================================== -->
+
+<div class="section">
+
+<h2>
+    🧩 Client Management
+</h2>
+
+
+<div class="feature-grid">
+
+
+<a
+    class="feature"
+    href="{{ url_for(
+        'workout_home',
+        client_id=client.client_id
+    ) }}"
+>
+
+    <h2>
+        🏋️ Workout
+    </h2>
+
+    <p>
+        Manual workout,
+        AI workout,
+        edit,
+        delete
+        and PDF.
+    </p>
+
+</a>
+
+
+
+<a
+    class="feature"
+    href="{{ url_for(
+        'diet_home',
+        client_id=client.client_id
+    ) }}"
+>
+
+    <h2>
+        🥗 Diet
+    </h2>
+
+    <p>
+        Manual diet,
+        AI diet,
+        edit,
+        delete
+        and PDF.
+    </p>
+
+</a>
+
+
+
+<a
+    class="feature"
+    href="{{ url_for(
+        'progress_home',
+        client_id=client.client_id
+    ) }}"
+>
+
+    <h2>
+        📈 Progress
+    </h2>
+
+    <p>
+        Weekly and monthly
+        progress tracking.
+    </p>
+
+</a>
+
+
+
+<a
+    class="feature"
+    href="{{ url_for(
+        'progress_photos',
+        client_id=client.client_id
+    ) }}"
+>
+
+    <h2>
+        📸 Photos
+    </h2>
+
+    <p>
+        Upload and maintain
+        progress photos.
+    </p>
+
+</a>
+
+
+
+<a
+    class="feature"
+    href="{{ url_for(
+        'generate_report',
+        client_id=client.client_id
+    ) }}"
+>
+
+    <h2>
+        📄 Full PDF
+    </h2>
+
+    <p>
+        Current workout,
+        diet,
+        progress
+        and analysis.
+    </p>
+
+</a>
+
+
+</div>
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- CURRENT WORKOUT -->
+<!-- ===================================================== -->
+
+<div class="section">
+
+<h2>
+    🏋️ Current Workout
+</h2>
+
+
+<div class="card">
+
+
+{% if latest_workout %}
+
+
+<h3>
+    {{ latest_workout.plan_name }}
+</h3>
+
+
+<p>
+    <strong>
+        Type:
+    </strong>
+
+    {{ latest_workout.plan_type }}
+</p>
+
+
+<p>
+    <strong>
+        Goal:
+    </strong>
+
+    {{ latest_workout.goal or "-" }}
+</p>
+
+
+<p>
+    <strong>
+        Days per week:
+    </strong>
+
+    {{ latest_workout.days_per_week or "-" }}
+</p>
+
+
+<p>
+    <strong>
+        Duration:
+    </strong>
+
+    {{ latest_workout.duration_minutes or "-" }}
+
+    {% if latest_workout.duration_minutes %}
+        minutes
+    {% endif %}
+
+</p>
+
+
+<p>
+    <strong>
+        Created:
+    </strong>
+
+    {{ latest_workout.created_at.strftime(
+        "%d-%m-%Y"
+    ) }}
+
+</p>
+
+
+<a
+    class="button pdf"
+    href="{{ url_for(
+        'workout_pdf',
+        plan_id=latest_workout.workout_plan_id
+    ) }}"
+>
+    📄 Download Workout PDF
+</a>
+
+
+{% else %}
+
+
+<p>
+    No workout plan saved yet.
+</p>
+
+
+{% endif %}
+
+
+</div>
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- CURRENT DIET -->
+<!-- ===================================================== -->
+
+<div class="section">
+
+<h2>
+    🥗 Current Diet
+</h2>
+
+
+<div class="card">
+
+
+{% if latest_diet %}
+
+
+<h3>
+    {{ latest_diet.plan_name }}
+</h3>
+
+
+<p>
+    <strong>
+        Type:
+    </strong>
+
+    {{ latest_diet.plan_type }}
+</p>
+
+
+<p>
+    <strong>
+        Goal:
+    </strong>
+
+    {{ latest_diet.goal or "-" }}
+</p>
+
+
+<p>
+    <strong>
+        Diet Type:
+    </strong>
+
+    {{ latest_diet.diet_type or "-" }}
+</p>
+
+
+<p>
+    <strong>
+        Calories:
+    </strong>
+
+    {{ latest_diet.daily_calories or "-" }}
+</p>
+
+
+<p>
+    <strong>
+        Created:
+    </strong>
+
+    {{ latest_diet.created_at.strftime(
+        "%d-%m-%Y"
+    ) }}
+
+</p>
+
+
+<a
+    class="button pdf"
+    href="{{ url_for(
+        'diet_pdf',
+        plan_id=latest_diet.diet_plan_id
+    ) }}"
+>
+    📄 Download Diet PDF
+</a>
+
+
+{% else %}
+
+
+<p>
+    No diet plan saved yet.
+</p>
+
+
+{% endif %}
+
+
+</div>
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- ANALYSIS -->
+<!-- ===================================================== -->
+
+<div class="section">
+
+<h2>
+    🤖 Latest Analysis
+</h2>
+
+
+<div class="card">
+
+
+{% if latest_analysis %}
+
+
+<p>
+
+    <strong>
+        Status:
+    </strong>
+
+    {{ latest_analysis.status }}
+
+</p>
+
+
+<p>
+
+    {{ latest_analysis.summary }}
+
+</p>
+
+
+<h3>
+    How to improve
+</h3>
+
+
+<ul>
+
+{% for item in
+    latest_analysis.recommendations|from_json
+%}
+
+    <li>
+        {{ item }}
+    </li>
+
+{% endfor %}
+
+</ul>
+
+
+{% else %}
+
+
+<p>
+    {{ calculated.summary }}
+</p>
+
+
+<h3>
+    How to improve
+</h3>
+
+
+<ul>
+
+{% for item in calculated.recommendations %}
+
+    <li>
+        {{ item }}
+    </li>
+
+{% endfor %}
+
+</ul>
+
+
+{% endif %}
+
+
+</div>
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- SAVED REPORTS -->
+<!-- ===================================================== -->
+
+<div class="section">
+
+<h2>
+    📄 Saved Reports
+</h2>
+
+
+<div class="card">
+
+
+{% if reports %}
+
+
+{% for report in reports %}
+
+
+<div class="latest-box">
+
+
+<strong>
+    {{ report.file_name }}
+</strong>
+
+
+<br>
+
+
+<small>
+
+    {{ report.created_at.strftime(
+        "%d-%m-%Y %H:%M"
+    ) }}
+
+</small>
+
+
+<br><br>
+
+
+<a
+    class="button data"
+    href="{{ url_for(
+        'download_report',
+        report_id=report.report_id
+    ) }}"
+>
+    Download
+</a>
+
+
+<form
+    method="POST"
+    action="{{ url_for(
+        'delete_report',
+        report_id=report.report_id
+    ) }}"
+    style="display:inline"
+    onsubmit="
+        return confirm(
+            'Delete this PDF?'
+        );
+    "
+>
+
+    <button
+        class="button red"
+        type="submit"
+    >
+        Delete
+    </button>
+
+</form>
+
+
+</div>
+
+
+{% endfor %}
+
+
+{% else %}
+
+
+<p>
+    No PDF reports saved yet.
+</p>
+
+
+{% endif %}
+
+
+</div>
+
+</div>
+
+
+</div>
+
+
+</body>
+</html>

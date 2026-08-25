@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Edit Progress</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7ff;
+}
+
+.container {
+    max-width: 900px;
+    width: 92%;
+    margin: 40px auto;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.08);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 18px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 18px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    box-sizing: border-box;
+}
+
+textarea {
+    min-height: 110px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background: #7c3aed;
+    color: white;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #7c3aed;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+@media(max-width:700px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<a
+    class="back"
+    href="{{ url_for(
+        'progress_home',
+        client_id=client.client_id
+    ) }}"
+>
+    ← Back to Progress
+</a>
+
+<div class="card">
+
+<h1>
+    Edit Progress
+</h1>
+
+<form method="POST">
+
+<div class="grid">
+
+<div>
+
+<label>
+    Type
+</label>
+
+<select name="update_type">
+
+    <option
+        value="WEEKLY"
+        {% if record.update_type == "WEEKLY" %}
+        selected
+        {% endif %}
+    >
+        Weekly
+    </option>
+
+    <option
+        value="MONTHLY"
+        {% if record.update_type == "MONTHLY" %}
+        selected
+        {% endif %}
+    >
+        Monthly
+    </option>
+
+</select>
+
+</div>
+
+
+<div>
+
+<label>
+    Period
+</label>
+
+<input
+    type="text"
+    name="period_label"
+    value="{{ record.period_label }}"
+    required
+>
+
+</div>
+
+
+<div>
+
+<label>
+    Date
+</label>
+
+<input
+    type="date"
+    name="update_date"
+    value="{{ record.update_date }}"
+    required
+>
+
+</div>
+
+
+<div>
+
+<label>
+    Weight
+</label>
+
+<input
+    type="number"
+    step="0.1"
+    name="weight_kg"
+    value="{{ record.weight_kg or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>
+    Body Fat
+</label>
+
+<input
+    type="number"
+    step="0.1"
+    name="body_fat_percent"
+    value="{{ record.body_fat_percent or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>
+    Waist
+</label>
+
+<input
+    type="number"
+    step="0.1"
+    name="waist_cm"
+    value="{{ record.waist_cm or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>
+    Chest
+</label>
+
+<input
+    type="number"
+    step="0.1"
+    name="chest_cm"
+    value="{{ record.chest_cm or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>
+    Hip
+</label>
+
+<input
+    type="number"
+    step="0.1"
+    name="hip_cm"
+    value="{{ record.hip_cm or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>
+    Arm
+</label>
+
+<input
+    type="number"
+    step="0.1"
+    name="arm_cm"
+    value="{{ record.arm_cm or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>
+    Thigh
+</label>
+
+<input
+    type="number"
+    step="0.1"
+    name="thigh_cm"
+    value="{{ record.thigh_cm or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>
+    Workout Adherence
+</label>
+
+<input
+    type="number"
+    min="0"
+    max="100"
+    name="workout_adherence"
+    value="{{ record.workout_adherence or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>
+    Diet Adherence
+</label>
+
+<input
+    type="number"
+    min="0"
+    max="100"
+    name="diet_adherence"
+    value="{{ record.diet_adherence or '' }}"
+>
+
+</div>
+
+</div>
+
+
+<label>
+    Trainer Notes
+</label>
+
+<textarea name="trainer_notes">{{ record.trainer_notes or '' }}</textarea>
+
+
+<label>
+
+<input
+    type="checkbox"
+    name="include_analysis"
+    {% if record.include_analysis %}
+    checked
+    {% endif %}
+>
+
+Include in analysis
+
+</label>
+
+
+<br><br>
+
+
+<button type="submit">
+    Save Changes
+</button>
+
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    Edit Workout
+</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f7ff;
+}
+
+.container {
+    width: 92%;
+    max-width: 1000px;
+    margin: 35px auto;
+}
+
+.card {
+    background: white;
+    padding: 28px;
+    border-radius: 18px;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+}
+
+.exercise {
+    background: #f8fafc;
+    padding: 18px;
+    margin-top: 15px;
+    border-radius: 12px;
+}
+
+input,
+textarea,
+select {
+    width: 100%;
+    padding: 11px;
+    margin: 6px 0 15px;
+    box-sizing: border-box;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #2563eb;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+}
+
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #2563eb;
+    text-decoration: none;
+}
+
+@media(max-width:700px) {
+    .grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<a
+    href="{{ url_for(
+        'workout_home',
+        client_id=client.client_id
+    ) }}"
+    class="back"
+>
+    ← Back to Workout
+</a>
+
+<div class="card">
+
+<h1>
+    Edit Workout Plan
+</h1>
+
+<form method="POST">
+
+<label>
+    Plan Name
+</label>
+
+<input
+    name="plan_name"
+    value="{{ plan.plan_name }}"
+    required
+>
+
+
+<div class="grid">
+
+<div>
+
+<label>
+    Goal
+</label>
+
+<input
+    name="goal"
+    value="{{ plan.goal or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>
+    Experience
+</label>
+
+<input
+    name="experience_level"
+    value="{{ plan.experience_level or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>
+    Days Per Week
+</label>
+
+<input
+    name="days_per_week"
+    value="{{ plan.days_per_week or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>
+    Duration
+</label>
+
+<input
+    name="duration_minutes"
+    value="{{ plan.duration_minutes or '' }}"
+>
+
+</div>
+
+</div>
+
+
+<label>
+    Equipment
+</label>
+
+<input
+    name="equipment"
+    value="{{ plan.equipment or '' }}"
+>
+
+
+<label>
+    Restrictions
+</label>
+
+<textarea
+    name="restrictions"
+>{{ plan.restrictions or '' }}</textarea>
+
+
+<input
+    type="hidden"
+    name="exercise_count"
+    value="{{ plan.exercises|length }}"
+>
+
+
+{% for exercise in plan.exercises %}
+
+<div class="exercise">
+
+<h3>
+    Exercise {{ loop.index }}
+</h3>
+
+<div class="grid">
+
+<div>
+
+<label>Day</label>
+
+<input
+    name="day_name_{{ loop.index0 }}"
+    value="{{ exercise.day_name }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Exercise</label>
+
+<input
+    name="exercise_name_{{ loop.index0 }}"
+    value="{{ exercise.exercise_name }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Sets</label>
+
+<input
+    name="sets_{{ loop.index0 }}"
+    value="{{ exercise.sets or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Reps</label>
+
+<input
+    name="reps_{{ loop.index0 }}"
+    value="{{ exercise.reps or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Duration</label>
+
+<input
+    name="duration_{{ loop.index0 }}"
+    value="{{ exercise.duration_minutes or '' }}"
+>
+
+</div>
+
+
+<div>
+
+<label>Rest</label>
+
+<input
+    name="rest_{{ loop.index0 }}"
+    value="{{ exercise.rest_seconds or '' }}"
+>
+
+</div>
+
+</div>
+
+
+<label>
+    Notes
+</label>
+
+<textarea
+    name="notes_{{ loop.index0 }}"
+>{{ exercise.notes or '' }}</textarea>
+
+</div>
+
+{% endfor %}
+
+
+<br>
+
+<button type="submit">
+    Save Workout Changes
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

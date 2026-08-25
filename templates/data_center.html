@@ -1,0 +1,738 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+>
+
+<title>
+    Data Center
+</title>
+
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+
+body {
+
+    margin: 0;
+
+    font-family: Arial, sans-serif;
+
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #f5f3ff,
+            #ecfdf5
+        );
+
+    color: #1f2937;
+}
+
+
+.header {
+
+    background:
+        linear-gradient(
+            135deg,
+            #0f766e,
+            #2563eb,
+            #7c3aed
+        );
+
+    color: white;
+
+    padding: 35px 50px;
+}
+
+
+.container {
+
+    width: 94%;
+
+    max-width: 1400px;
+
+    margin: 30px auto;
+}
+
+
+.buttons {
+
+    display: flex;
+
+    gap: 10px;
+
+    flex-wrap: wrap;
+
+    margin-top: 18px;
+}
+
+
+.button {
+
+    display: inline-block;
+
+    padding: 12px 16px;
+
+    border-radius: 9px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+}
+
+
+.white {
+
+    background: white;
+
+    color: #4f46e5;
+}
+
+
+.green {
+
+    background: #059669;
+
+    color: white;
+}
+
+
+.kpis {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 16px;
+
+    margin-top: 25px;
+}
+
+
+.kpi {
+
+    background: white;
+
+    padding: 22px;
+
+    border-radius: 16px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.07);
+
+    border-top: 5px solid #4f46e5;
+}
+
+
+.kpi h2 {
+
+    margin: 0;
+
+    font-size: 30px;
+}
+
+
+.kpi p {
+
+    color: #6b7280;
+}
+
+
+.card {
+
+    background: white;
+
+    padding: 22px;
+
+    border-radius: 18px;
+
+    margin-top: 22px;
+
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.07);
+
+    overflow-x: auto;
+}
+
+
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
+
+    min-width: 1200px;
+}
+
+
+th,
+td {
+
+    padding: 11px;
+
+    border-bottom:
+        1px solid #e5e7eb;
+
+    text-align: left;
+}
+
+
+th {
+
+    background: #eef2ff;
+}
+
+
+.good {
+
+    color: #047857;
+
+    font-weight: bold;
+}
+
+
+.warn {
+
+    color: #b45309;
+
+    font-weight: bold;
+}
+
+
+@media(max-width: 1000px) {
+
+    .kpis {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+}
+
+
+@media(max-width: 600px) {
+
+    .kpis {
+
+        grid-template-columns: 1fr;
+    }
+
+}
+
+</style>
+
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+    <h1>
+        📊 Data Center
+    </h1>
+
+
+    <p>
+
+        View all clients,
+        joining dates,
+        current plans,
+        progress
+        and stored records.
+
+    </p>
+
+
+    <div class="buttons">
+
+
+        <a
+            class="button white"
+            href="{{ url_for('home') }}"
+        >
+            ← Home
+        </a>
+
+
+        <a
+            class="button green"
+            href="{{ url_for(
+                'export_data_csv'
+            ) }}"
+        >
+            ⬇ Download Excel Data
+        </a>
+
+
+    </div>
+
+</div>
+
+
+
+<div class="container">
+
+
+<!-- ===================================================== -->
+<!-- STATISTICS -->
+<!-- ===================================================== -->
+
+<div class="kpis">
+
+
+<div class="kpi">
+
+    <h2>
+        {{ total_clients }}
+    </h2>
+
+    <p>
+        Total Clients
+    </p>
+
+</div>
+
+
+
+<div class="kpi">
+
+    <h2>
+        {{ new_this_month }}
+    </h2>
+
+    <p>
+        New This Month
+    </p>
+
+</div>
+
+
+
+<div class="kpi">
+
+    <h2>
+        {{ new_last_7_days }}
+    </h2>
+
+    <p>
+        New Last 7 Days
+    </p>
+
+</div>
+
+
+
+<div class="kpi">
+
+    <h2>
+        {{ total_workouts }}
+    </h2>
+
+    <p>
+        Workout Plans
+    </p>
+
+</div>
+
+
+
+<div class="kpi">
+
+    <h2>
+        {{ total_diets }}
+    </h2>
+
+    <p>
+        Diet Plans
+    </p>
+
+</div>
+
+
+
+<div class="kpi">
+
+    <h2>
+        {{ total_progress }}
+    </h2>
+
+    <p>
+        Progress Updates
+    </p>
+
+</div>
+
+
+
+<div class="kpi">
+
+    <h2>
+        {{ total_photos }}
+    </h2>
+
+    <p>
+        Progress Photos
+    </p>
+
+</div>
+
+
+
+<div class="kpi">
+
+    <h2>
+        {{ total_reports }}
+    </h2>
+
+    <p>
+        PDF Reports
+    </p>
+
+</div>
+
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- CLIENT TABLE -->
+<!-- ===================================================== -->
+
+<div class="card">
+
+
+<h2>
+    👥 All Clients
+</h2>
+
+
+<table>
+
+
+<thead>
+
+<tr>
+
+    <th>
+        Client ID
+    </th>
+
+    <th>
+        Name
+    </th>
+
+    <th>
+        Phone
+    </th>
+
+    <th>
+        Goal
+    </th>
+
+    <th>
+        Joined
+    </th>
+
+    <th>
+        Current Weight
+    </th>
+
+    <th>
+        Score
+    </th>
+
+    <th>
+        Latest Workout
+    </th>
+
+    <th>
+        Latest Diet
+    </th>
+
+    <th>
+        Progress Count
+    </th>
+
+    <th>
+        Open
+    </th>
+
+</tr>
+
+</thead>
+
+
+
+<tbody>
+
+
+{% for row in client_rows %}
+
+
+<tr>
+
+
+<td>
+
+    {{ row.client.client_code }}
+
+</td>
+
+
+<td>
+
+    {{ row.client.full_name }}
+
+</td>
+
+
+<td>
+
+    {{ row.client.phone }}
+
+</td>
+
+
+<td>
+
+    {{ row.client.goal or "-" }}
+
+</td>
+
+
+<td>
+
+    {{ row.client.created_at.strftime(
+        "%d-%m-%Y"
+    ) }}
+
+</td>
+
+
+<td>
+
+
+{% if
+    row.latest_progress
+    and row.latest_progress.weight_kg
+    is not none
+%}
+
+
+    {{ "%.1f"|format(
+        row.latest_progress.weight_kg
+    ) }} kg
+
+
+{% else %}
+
+
+    -
+
+
+{% endif %}
+
+
+</td>
+
+
+<td
+    class="
+    {% if row.score >= 75 %}
+        good
+    {% else %}
+        warn
+    {% endif %}
+    "
+>
+
+    {{ "%.0f"|format(
+        row.score
+    ) }}/100
+
+</td>
+
+
+<td>
+
+    {{ row.latest_workout.plan_name
+       if row.latest_workout
+       else "-" }}
+
+</td>
+
+
+<td>
+
+    {{ row.latest_diet.plan_name
+       if row.latest_diet
+       else "-" }}
+
+</td>
+
+
+<td>
+
+    {{ row.progress_count }}
+
+</td>
+
+
+<td>
+
+    <a
+        class="button green"
+        href="{{ url_for(
+            'client_profile',
+            client_id=row.client.client_id
+        ) }}"
+    >
+        View
+    </a>
+
+</td>
+
+
+</tr>
+
+
+{% endfor %}
+
+
+</tbody>
+
+
+</table>
+
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- EXPORT INFORMATION -->
+<!-- ===================================================== -->
+
+<div class="card">
+
+
+<h2>
+    📦 Export All Data
+</h2>
+
+
+<p>
+
+    Click
+    <strong>
+        Download Excel Data
+    </strong>
+    above to download your client database
+    as a CSV file.
+
+</p>
+
+
+<p>
+    
+    The CSV includes:
+
+</p>
+
+
+<ul>
+
+    <li>
+        Client ID
+    </li>
+
+    <li>
+        Client name
+    </li>
+
+    <li>
+        Phone
+    </li>
+
+    <li>
+        Email
+    </li>
+
+    <li>
+        Gender
+    </li>
+
+    <li>
+        Height
+    </li>
+
+    <li>
+        Starting weight
+    </li>
+
+    <li>
+        Goal
+    </li>
+
+    <li>
+        Joining date
+    </li>
+
+    <li>
+        Latest weight
+    </li>
+
+    <li>
+        Progress score
+    </li>
+
+    <li>
+        Latest workout
+    </li>
+
+    <li>
+        Latest diet
+    </li>
+
+    <li>
+        Workout/diet/progress/photo/PDF counts
+    </li>
+
+</ul>
+
+
+<p>
+
+    The downloaded CSV can be opened
+    directly in Microsoft Excel.
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</body>
+
+</html>

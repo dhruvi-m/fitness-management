@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>
+    AI Diet Preview
+</title>
+
+<style>
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #ecfdf5;
+}
+
+.container {
+    width: 92%;
+    max-width: 1000px;
+    margin: 35px auto;
+}
+
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+}
+
+.meal {
+    background: #f8fafc;
+    padding: 18px;
+    margin-top: 12px;
+    border-radius: 10px;
+    border-left: 4px solid #10b981;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: #059669;
+    color: white;
+    border: none;
+    border-radius: 9px;
+    font-weight: bold;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="card">
+
+<h1>
+    🤖 AI Diet Preview
+</h1>
+
+<h2>
+    {{ diet.plan_name }}
+</h2>
+
+<p>
+    Goal:
+    {{ diet.goal }}
+</p>
+
+<p>
+    Diet Type:
+    {{ diet.diet_type }}
+</p>
+
+<p>
+    Calories:
+    {{ diet.daily_calories or "-" }}
+</p>
+
+
+{% for meal in diet.meals %}
+
+<div class="meal">
+
+<h3>
+    {{ meal.day_name }}
+    -
+    {{ meal.meal_type }}
+</h3>
+
+<strong>
+    {{ meal.meal_name }}
+</strong>
+
+<p>
+    Quantity:
+    {{ meal.quantity }}
+</p>
+
+<p>
+    Calories:
+    {{ meal.calories or "-" }}
+</p>
+
+{% if meal.notes %}
+
+<p>
+    {{ meal.notes }}
+</p>
+
+{% endif %}
+
+</div>
+
+{% endfor %}
+
+
+<form
+    method="POST"
+    action="{{ url_for(
+        'save_ai_diet',
+        client_id=client.client_id
+    ) }}"
+>
+
+<input
+    type="hidden"
+    name="diet_json"
+    value="{{ diet|tojson|forceescape }}"
+>
+
+
+<br>
+
+<button type="submit">
+    Save AI Diet
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

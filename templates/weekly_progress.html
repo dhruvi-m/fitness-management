@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>
+        Weekly Progress
+    </title>
+
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eff6ff,
+                    #f5f3ff,
+                    #ecfeff
+                );
+        }
+
+        .header {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #6366f1
+                );
+
+            color: white;
+
+            padding: 30px 50px;
+        }
+
+        .container {
+
+            width: 92%;
+
+            max-width: 900px;
+
+            margin: 35px auto;
+        }
+
+        .back {
+
+            color: #4f46e5;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+        .card {
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 20px;
+
+            margin-top: 25px;
+
+            box-shadow:
+                0 8px 25px
+                rgba(0,0,0,.08);
+        }
+
+        label {
+
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+        }
+
+        input,
+        textarea {
+
+            width: 100%;
+
+            padding: 12px;
+
+            margin-bottom: 18px;
+
+            border:
+                1px solid #d1d5db;
+
+            border-radius: 8px;
+        }
+
+        textarea {
+
+            min-height: 110px;
+
+            resize: vertical;
+        }
+
+        .grid {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+        .analysis-box {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #eef2ff,
+                    #ecfdf5
+                );
+
+            border:
+                1px solid #c7d2fe;
+
+            padding: 18px;
+
+            border-radius: 12px;
+
+            margin-top: 10px;
+        }
+
+        .save-button {
+
+            width: 100%;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #4f46e5
+                );
+
+            color: white;
+
+            border: none;
+
+            padding: 15px;
+
+            border-radius: 10px;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+        }
+
+        @media(max-width:700px) {
+
+            .grid {
+
+                grid-template-columns: 1fr;
+            }
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+    <h1>
+        📝 Weekly Progress
+    </h1>
+
+    <p>
+        {{ client.full_name }}
+        —
+        {{ client.client_code }}
+    </p>
+
+</div>
+
+
+<div class="container">
+
+
+<a
+    href="{{ url_for(
+        'progress_home',
+        client_id=client.client_id
+    ) }}"
+    class="back"
+>
+    ← Back to Progress
+</a>
+
+
+<form method="POST">
+
+
+<div class="card">
+
+    <h2>
+        Weekly Information
+    </h2>
+
+
+    <label>
+        Week
+    </label>
+
+    <input
+        type="text"
+        name="period_label"
+        placeholder="Week 1"
+        required
+    >
+
+
+    <label>
+        Date
+    </label>
+
+    <input
+        type="date"
+        name="update_date"
+        value="{{ '' }}"
+        required
+    >
+
+
+    <div class="grid">
+
+
+        <div>
+
+            <label>
+                Weight (kg)
+            </label>
+
+            <input
+                type="number"
+                step="0.1"
+                name="weight_kg"
+                placeholder="68.5"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Body Fat (%)
+            </label>
+
+            <input
+                type="number"
+                step="0.1"
+                name="body_fat_percent"
+                placeholder="24.5"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Chest (cm)
+            </label>
+
+            <input
+                type="number"
+                step="0.1"
+                name="chest_cm"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Waist (cm)
+            </label>
+
+            <input
+                type="number"
+                step="0.1"
+                name="waist_cm"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Hip (cm)
+            </label>
+
+            <input
+                type="number"
+                step="0.1"
+                name="hip_cm"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Arm (cm)
+            </label>
+
+            <input
+                type="number"
+                step="0.1"
+                name="arm_cm"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Thigh (cm)
+            </label>
+
+            <input
+                type="number"
+                step="0.1"
+                name="thigh_cm"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Workout Adherence (%)
+            </label>
+
+            <input
+                type="number"
+                step="1"
+                min="0"
+                max="100"
+                name="workout_adherence"
+                placeholder="90"
+            >
+
+        </div>
+
+
+        <div>
+
+            <label>
+                Diet Adherence (%)
+            </label>
+
+            <input
+                type="number"
+                step="1"
+                min="0"
+                max="100"
+                name="diet_adherence"
+                placeholder="85"
+            >
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<div class="card">
+
+    <h2>
+        📝 Trainer Notes
+    </h2>
+
+    <textarea
+        name="trainer_notes"
+        placeholder="How did the client perform this week?"
+    ></textarea>
+
+
+    <div class="analysis-box">
+
+        <label>
+
+            <input
+                type="checkbox"
+                name="include_analysis"
+            >
+
+            Include progress analysis in report
+
+        </label>
+
+        <p
+            style="
+                color:#6b7280;
+                margin-bottom:0;
+            "
+        >
+
+            If selected, the report can show
+            weight and measurement changes plus
+            trainer notes.
+
+        </p>
+
+    </div>
+
+</div>
+
+
+<div class="card">
+
+    <button
+        type="submit"
+        class="save-button"
+    >
+        💾 Save Weekly Progress
+    </button>
+
+</div>
+
+
+</form>
+
+
+</div>
+
+
+</body>
+
+</html>

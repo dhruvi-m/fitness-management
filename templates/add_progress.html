@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Add Progress</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background:
+        linear-gradient(
+            135deg,
+            #eff6ff,
+            #f5f3ff,
+            #ecfdf5
+        );
+    color: #1f2937;
+}
+
+.header {
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #ef4444,
+            #8b5cf6
+        );
+    color: white;
+    padding: 32px 50px;
+}
+
+.container {
+    width: 92%;
+    max-width: 950px;
+    margin: 35px auto;
+}
+
+.back {
+    color: #7c3aed;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.card {
+    background: white;
+    padding: 30px;
+    border-radius: 20px;
+    margin-top: 25px;
+    box-shadow:
+        0 8px 25px
+        rgba(0,0,0,.08);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 18px;
+}
+
+label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+input,
+select,
+textarea {
+    width: 100%;
+    padding: 13px;
+    margin-bottom: 18px;
+    border: 1px solid #d1d5db;
+    border-radius: 9px;
+    font-size: 15px;
+}
+
+textarea {
+    min-height: 120px;
+}
+
+.save {
+    width: 100%;
+    padding: 15px;
+    border: none;
+    border-radius: 10px;
+    background:
+        linear-gradient(
+            135deg,
+            #f59e0b,
+            #ef4444
+        );
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.info {
+    background: #eff6ff;
+    padding: 15px;
+    border-radius: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+    color: #374151;
+}
+
+@media(max-width:700px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        padding: 25px;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="header">
+
+    <h1>
+        ➕ Add New Progress
+    </h1>
+
+    <p>
+        {{ client.full_name }}
+        —
+        {{ client.client_code }}
+    </p>
+
+</div>
+
+
+<div class="container">
+
+
+<a
+    href="{{ url_for(
+        'progress_home',
+        client_id=client.client_id
+    ) }}"
+    class="back"
+>
+    ← Back to Progress
+</a>
+
+
+<div class="card">
+
+    <div class="info">
+
+        <strong>
+            This is a new progress record.
+        </strong>
+
+        <br><br>
+
+        The client is NOT registered again.
+        This record will be added to
+        {{ client.full_name }}'s existing history.
+
+    </div>
+
+
+    <form method="POST">
+
+
+        <div class="grid">
+
+
+            <div>
+
+                <label>
+                    Record Type
+                </label>
+
+                <select
+                    name="update_type"
+                    required
+                >
+
+                    <option value="WEEKLY">
+                        Weekly
+                    </option>
+
+                    <option value="MONTHLY">
+                        Monthly
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Period
+                </label>
+
+                <input
+                    type="text"
+                    name="period_label"
+                    placeholder="Week 2 / September 2026"
+                    required
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Date
+                </label>
+
+                <input
+                    type="date"
+                    name="update_date"
+                    value="{{ today }}"
+                    required
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Weight (kg)
+                </label>
+
+                <input
+                    type="number"
+                    step="0.1"
+                    name="weight_kg"
+                    placeholder="67.2"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Body Fat (%)
+                </label>
+
+                <input
+                    type="number"
+                    step="0.1"
+                    name="body_fat_percent"
+                    placeholder="24.5"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Chest (cm)
+                </label>
+
+                <input
+                    type="number"
+                    step="0.1"
+                    name="chest_cm"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Waist (cm)
+                </label>
+
+                <input
+                    type="number"
+                    step="0.1"
+                    name="waist_cm"
+                    placeholder="30.5"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Hip (cm)
+                </label>
+
+                <input
+                    type="number"
+                    step="0.1"
+                    name="hip_cm"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Arm (cm)
+                </label>
+
+                <input
+                    type="number"
+                    step="0.1"
+                    name="arm_cm"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Thigh (cm)
+                </label>
+
+                <input
+                    type="number"
+                    step="0.1"
+                    name="thigh_cm"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Workout Adherence (%)
+                </label>
+
+                <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    name="workout_adherence"
+                    placeholder="90"
+                >
+
+            </div>
+
+
+            <div>
+
+                <label>
+                    Diet Adherence (%)
+                </label>
+
+                <input
+                    type="number"
+                    min="0"
+                    max="100"
+                    name="diet_adherence"
+                    placeholder="85"
+                >
+
+            </div>
+
+
+        </div>
+
+
+        <label>
+            Trainer Notes
+        </label>
+
+        <textarea
+            name="trainer_notes"
+            placeholder="Describe the client's progress..."
+        ></textarea>
+
+
+        <label>
+
+            <input
+                type="checkbox"
+                name="include_analysis"
+                checked
+            >
+
+            Include this progress in analysis
+
+        </label>
+
+
+        <button
+            type="submit"
+            class="save"
+        >
+            💾 Save New Progress
+        </button>
+
+
+    </form>
+
+</div>
+
+
+</div>
+
+
+</body>
+
+</html>

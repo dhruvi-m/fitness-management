@@ -10,49 +10,49 @@
 
 ### 🏠 Home / Client Management
 
-![Home Page](screenshots/home.png)
+![Home Page](screenshots/home.png.png)
 
 <br><br>
 
 
 ### 👤 Client Profile
 
-![Client Profile](screenshots/client-profile.png)
+![Client Profile](screenshots/client-profile.png.png)
 
 <br><br>
 
 
 ### 🏋️ Workout Management
 
-![Workout Management](screenshots/workout.png)
+![Workout Management](screenshots/workout.png.png)
 
 <br><br>
 
 
 ### 🥗 Diet Management
 
-![Diet Management](screenshots/diet.png)
+![Diet Management](screenshots/diet.png.png)
 
 <br><br>
 
 
 ### 📈 Progress & AI Analysis
 
-![Progress Analysis](screenshots/progress.png)
+![Progress Analysis](screenshots/progress.png.png)
 
 <br><br>
 
 
 ### 📊 Data Center
 
-![Data Center](screenshots/data-center.png)
+![Data Center](screenshots/data-center.png.png)
 
 <br><br>
 
 
 ### 📄 Fitness PDF Report
 
-![Fitness Report](screenshots/report.png)
+![Fitness Report](screenshots/report.png.png)
 
 
 ## ✨ Features
